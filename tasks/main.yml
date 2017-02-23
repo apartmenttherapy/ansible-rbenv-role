@@ -70,8 +70,8 @@
   shell:
     find '{{ rbenv_root }}'
       \( -iname ".git" -prune \) -o
-      -type d ! -perm -g+s
-      -exec chmod -v g+rwxs {} + | head -n 1
+      -type d ! -perm -g+rwXs
+      -exec chmod -v g+rwXs {} + | head -n 1
   become: yes
   when:
     - rbenv.env == "system"
