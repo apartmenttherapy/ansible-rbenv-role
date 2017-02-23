@@ -178,6 +178,7 @@
 
 - name: check ruby {{ rbenv.ruby_version }} installed for system
   shell: $SHELL -lc "rbenv versions | grep {{ rbenv.ruby_version }}"
+  become: false
   register: ruby_installed
   changed_when: false
   ignore_errors: yes
@@ -188,7 +189,7 @@
 
 - name: install ruby {{ rbenv.ruby_version }} for system
   shell: bash -lc "rbenv install {{ rbenv.ruby_version }}"
-  become: yes
+  become: false
   when:
     - rbenv.env == "system"
     - ruby_installed.rc != 0
@@ -206,7 +207,7 @@
     - rbenv
 
 - name: set ruby {{ rbenv.ruby_version }} for system
-  become: yes
+  become: false
   shell: bash -lc "rbenv global {{ rbenv.ruby_version }} && rbenv rehash"
   when:
     - rbenv.env == "system"
